@@ -48,4 +48,14 @@
         public function deleteAll(): void {
             $this->connection->exec("DELETE FROM users");
         }
+
+        public function update(User $user): User {
+            $statement = $this->connection->prepare("UPDATE users SET name = ? , password = ? WHERE id = ?");
+            $statement->execute([
+                $user->name,
+                $user->password,
+                $user->id
+            ]);
+            return $user;
+        }
     }
